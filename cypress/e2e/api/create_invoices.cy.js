@@ -14,7 +14,7 @@ describe('List Invoice Scenarios', function () {
 
     it('Create Invoice with mandatory parameters', {scrollBehavior: false},function () { 
       
-      createInvoiceWithMandatoryParam("invoice-"+ Date.now(),1000000)
+      createInvoiceWithMandatoryParam("invoice-"+ Date.now(),1000000) 
 
     })
 
