@@ -4,7 +4,8 @@ import {
   createInvoiceWithOptionalParamteres,
   createInvoiceWithBlankMandatory,
   createInvoiceWithUnavailablePaymetMethod,
-  createInvoiceWithNotValidatedAmount
+  createInvoiceWithNotValidatedAmount,
+  createInvoiceWithUnauthorizedAuth
 } from './create_invoice.method.js'
 
 describe('List Invoice Scenarios', function () {
@@ -59,7 +60,23 @@ describe('List Invoice Scenarios', function () {
 
     })
     
+    it('Create Invoice with More Than Maximum Amount', {scrollBehavior: false},function () { 
+          
+      createInvoiceWithUnauthorizedAuth("invoice-"+ Date.now(),10000000011)
+
+    })
     
+    it('Create Invoice with zero amount', {scrollBehavior: false},function () { 
+          
+      createInvoiceWithNotValidatedAmount("invoice-"+ Date.now(),0)
+
+    })
+
+    it('Create Invoice with negative amount', {scrollBehavior: false},function () { 
+          
+      createInvoiceWithNotValidatedAmount("invoice-"+ Date.now(),-100000)
+
+    })
     
 })
 

@@ -119,20 +119,7 @@ let createInvoiceWithOptionalParamteres= (external_id,amount)=>{
     expect(resp.body.external_id).to.eq(external_id),
     expect(resp.body.amount).to.eq(amount)
     expect(resp.body.customer.given_names).to.eq("NEIL")
-/*
-    cy.request({
-      method: 'GET',
-      url: "/v2/invoices/"+resp.body.id,
-      headers:{
-        Authorization: "Basic " + Cypress.env("auth")
-      }
 
-  })
-  .then((resp) => {
-    
-    expect(resp.status).to.eq(200)
-  })
-*/
 
 
   })
@@ -209,7 +196,7 @@ let createInvoiceWithNotValidatedAmount= (external_id,amount)=>{
   .then((resp) => {
     
     expect(resp.status).to.eq(400)
-    if(amount<10000)
+    if((amount<10000)&&(amount>0))
     {
       expect(resp.body.error_code).to.equal("MINIMAL_TRANSFER_AMOUNT_ERROR")
     }
@@ -217,6 +204,12 @@ let createInvoiceWithNotValidatedAmount= (external_id,amount)=>{
     {
       expect(resp.body.error_code).to.equal("MAXIMUM_TRANSFER_AMOUNT_ERROR")
     }
+    if(amount<=0)
+    {
+      expect(resp.body.error_code).to.equal("API_VALIDATION_ERROR")
+
+    }
+    
     
 
 
@@ -226,6 +219,31 @@ let createInvoiceWithNotValidatedAmount= (external_id,amount)=>{
 }
 
 
+let createInvoiceWithUnauthorizedAuth= (external_id,amount)=>{
+  cy.request({
+      method: 'POST',
+      url: "/v2/invoices/",
+      failOnStatusCode: false,
+      headers:{
+        Authorization: "Basic " 
+      },
+      body: {
+        "external_id": external_id,
+        "amount": amount,
+        "callback_virtual_account_id": "6315802ef635423c6649cc64"
+      }
+
+  })
+  .then((resp) => {
+    
+    expect(resp.status).to.eq(401)
+   
+
+
+
+  })
+
+}
    
 
 export {
@@ -233,6 +251,7 @@ export {
   createInvoiceWithOptionalParamteres,
   createInvoiceWithBlankMandatory,
   createInvoiceWithUnavailablePaymetMethod,
-  createInvoiceWithNotValidatedAmount
+  createInvoiceWithNotValidatedAmount,
+  createInvoiceWithUnauthorizedAuth
   
 }
