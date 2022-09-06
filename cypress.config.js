@@ -8,8 +8,8 @@ module.exports = defineConfig({
   viewportHeight: 1080,
   pageLoadTimeout:120000,
   retries: {
-    runMode: 2,
-    openMode: 2,
+    runMode: 3,
+    openMode: 0,
   },
   chromeWebSecurity: false,
   e2e: {
