@@ -18,7 +18,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       return require('./cypress/plugins/index.js')(on, config)
     },
-    baseUrl: 'https://api-staging.xendit.co',
+    baseUrl: 'https://api-staging.co',
     excludeSpecPattern: ['*.hot-update.js', '*.method.js'],
     experimentalSessionAndOrigin: true
   },
